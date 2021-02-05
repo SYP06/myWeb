@@ -117,7 +117,7 @@ export default {
 </script>
 <style scoped>
 .home-bg {
-    background: url('../assets/images/gratisography-430H.jpg') center no-repeat fixed;
+    background: url('../assets/images/slider-img/home-bg.jpg') center no-repeat fixed;
     background-size: 100% 100%;
     height: 100%;
     width: 100%;
@@ -126,37 +126,36 @@ export default {
     display: block;
 }
 .col-md-12{
-    margin-top: 200px;
+    margin-top: 13rem;
 }
 .hero-text .wel-txt {
     color: #fff;
-    /* color: #333; */
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: 400;
 }
 .hero-text  span {
     font-weight: 700;
     color: #fff;
-    font-size: 34px;
-    margin-bottom: 5px;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 .typer-dynamic{
     position: relative;
   }
   .typer-cursor{
     height: 100%;
-    width: 3px;
+    width: 0.2rem;
     animation: flash 1.5s linear infinite;
   }
 .informative-txt {
     padding: 0;
-    margin-top: 20px;
+    margin-top: 1.5rem;
     list-style: none;
 }
 
     .informative-txt li {
         color: #fff;
-        font-size: 16px;
+        font-size: 1rem;
     }
 /* ---- particles container ---- */
  #particles-js {

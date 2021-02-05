@@ -26,7 +26,9 @@ module.exports = {
           comm_id: obj.comm_id,
           comm_content: obj.comm_content,
           comm_post_time: obj.comm_post_time,
-          username: obj.usernames
+          comm_nickname: obj.comm_nickname,
+          username: obj.username,
+          nickname:obj.nickname
         });
       }
       console.log(blogInfo);
@@ -38,5 +40,24 @@ module.exports = {
       ctx.body = 'error'
     }
     
+  },
+  async sendComment(ctx){
+    let { comment, blogId, userId,nickname } = ctx.request.body;
+    if (comment.trim().length == 0) {
+      ctx.body = '内容不能为空!'
+    } else {
+      let results = await blogModel.saveComment(comment, blogId, userId,nickname);
+      console.log(results);
+      if (results.insertId>0) {
+        ctx.body = {
+          state: "success",
+        };
+      } else {
+        ctx.body = {
+          state: "fail",
+        };
+      }
+    }
   }
+  
 }

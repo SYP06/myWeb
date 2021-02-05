@@ -53,7 +53,9 @@ export default {
 }
 </script>
 <style scoped>
-/* @import "../assets/css/error.css"; */
+body{
+  background-color: #000 !important;
+}
 div {
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;

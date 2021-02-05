@@ -2,16 +2,14 @@
   <div>
     <section class=" lineVector">
       <div class="section_title mb-4 text-center">
-        <h2><span>Blog</span></h2>
+        <h2><span>B-l-o-g</span></h2>
       </div>
       <!-- 搜索框 -->
       <div class="search">
         <input class="search-input" type="text" placeholder="请输入内容" v-model="search"  @keyup="inpSearch">
         <button class="search-btn" @click="clear">X</button>
-
       </div>
-
-      <div class="blog-box" v-if="showList.length>0">
+      <div class="blog-box" v-if="showList.length>0" :style="img">
         <div class="blog" v-for="(item) in showList" :key="item.blog_id" @click = 'change(item)' v-bind:class="{active:item.isActive}" >
         <h5 class="blog-title">
          {{item.title}}
@@ -22,9 +20,8 @@
         </p>
         </div> 
       </div>  
-
       <div class="blog-box" v-else>
-        <div class="blog" v-for="(item) in blogs" :key="item.blog_id" @click = 'change(item)' v-bind:class="{active:item.isActive}" >
+        <div class="blog" v-for="(item) in blogs" :key="item.blog_id"  v-bind:class="{active:item.isActive}" >
         <h5 class="blog-title">
          {{item.title}}
         </h5>
@@ -32,10 +29,7 @@
         <p class="blog-skip">
           <router-link :to="{path:'/blog/detail/'+ item.blog_id}">查看详情></router-link>
         </p>
-      
       </div>  
-
-
       </div> 
     </section>
   </div>
@@ -56,7 +50,13 @@ export default {
   methods: {
     getBlogs(){
       this.$http('/blog/list').then(res=>{
-        this.blogs = res.data.blogs;
+        let { state } = res.data;
+        if (state == "auth-fail") {
+          alert("请求未授权");
+        } else if (state == "success") {
+          console.log(res);
+          this.blogs = res.data.blogs;
+        }
       })
     },
     inpSearch(){
@@ -84,49 +84,47 @@ export default {
 }
 </script>
 <style scoped>
-.lineVector {
-    background: url('../assets/images/contact/contact-bg.png');
-    -webkit-animation: slide 20s linear infinite;
-    -moz-animation: slide 20s linear infinite;
-    animation: slide 20s linear infinite;
-    height: 100%;
-}
-@keyframes slide {
-    from {
-        background-position: 0 0;
-    }
-
-    to {
-        background-position: -400px 0;
-    }
-}
 section {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: calc(100%) !important;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 0 40px 0 120px ;
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: calc(100%) !important;
+    bottom: 0;
+    background-color: #f1f3f6;
+    padding: 0 3rem 0 11rem ;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .section_title{
-  margin: 30px auto;
-}
+  margin: 3rem auto;
+  color: #212529;
 
+}
+.section_title h2 {
+    position: relative;
+    margin-bottom: 2rem;
+}
+.section_title h2::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    height: 4.5rem;
+    width: 4.5rem;
+    background: url('../assets/images/title-decoration.png') no-repeat;
+    background-size: 4.5rem;
+    z-index: 0;
+}
 .blog {
-  margin: 20px auto;  
-  padding: 20px;
-  background: #f85959;
-  border-radius: 10px;
+  padding: 1rem;
+  background: hsla(0, 0%, 80%, 0.8);
+  border-radius: 0.7rem;
   text-align: left;
-  margin: 20px;
-  /* box-shadow: 3px 3px 3px #dfdfdf, -3px -3px 3px #fafafa; */
-  
+  margin: 1.5rem;  
 }
 .blog-title {
-  padding: 10px;
+  padding: 0.5rem;
   
 }
 .blog-skip a:hover{
@@ -137,7 +135,7 @@ section {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
+  /* align-items: flex-start; */
 }
 .blog-box::after{
   content: '';
@@ -145,17 +143,17 @@ section {
 }
 
 .search-input{
-  margin: 30px auto;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  padding: 5px;
-  width: 500px;
+  margin: 2rem auto;
+  border: 1px solid #212529;
+  border-radius: 0.1rem;
+  padding: 0.2rem;
+  width: 25rem;
 }
 .search-btn{
-  color: #ffffff;
-  border:1px solid #ffffff;
-  border-radius: 5px;
-  padding: 5px;
+  color: #212529;
+  border:1px solid #212529;
+  border-radius: 0.1rem;
+  padding: 0.2rem;
 }
 
 </style>

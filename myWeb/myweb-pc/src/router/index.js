@@ -6,6 +6,9 @@ import About from '../views/About.vue'
 import Contact from '../views/Contact.vue'
 import Detail from '../views/Detail.vue'
 import Error from '../views/Error.vue'
+import Login from '../views/Login.vue'
+import Regist from '../views/Regist.vue'
+
 
 
 
@@ -16,6 +19,16 @@ const routes = [
     path: '/',
     name: 'Index',
     component: Index
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/regist',
+    name: 'Regist',
+    component: Regist
   },
   {
     path: '/blog',

@@ -8,6 +8,9 @@ router.get('/list', controller.getBlogList )
 
 router.get('/detail/:blogId', controller.getBlogDetail )
 
+router.post('/comment', controller.sendComment )
+
+
 
 
 module.exports = router

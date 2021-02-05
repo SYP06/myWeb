@@ -4,7 +4,7 @@ const controller = require('../controller/contactController')
 router.prefix('/contact')
 
 
-router.post('/post', controller.sendContact )
+router.post('/send', controller.sendContact )
 
 
 

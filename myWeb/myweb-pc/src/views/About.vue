@@ -56,7 +56,7 @@
     }
 
     to {
-        background-position: -400px 0;
+        background-position: -25rem 0;
     }
 }
 section {
@@ -68,30 +68,29 @@ section {
     overflow-x: hidden;
     overflow-y: auto;
     background-color: #f1f3f6;
-    padding: 60px;
+    padding: 3.5rem;
 }
 .about-img-box {
-    margin-top: 30px;
+    margin-top: 2rem;
 }
 .about-img-box .image {
-    padding: 15px;
+    padding: 1rem;
     background: #fff;
-    -webkit-box-shadow: 0px 5px 20px 0px rgba(69, 67, 96, 0.1);
-    -moz-box-shadow: 0px 5px 20px 0px rgba(69, 67, 96, 0.1);
-    box-shadow: 0px 5px 20px 0px rgba(69, 67, 96, 0.1)
+    -webkit-box-shadow: 0px 0.2rem 1.5rem 0px rgba(69, 67, 96, 0.1);
+    -moz-box-shadow: 0px 0.2rem 1.5rem 0px rgba(69, 67, 96, 0.1);
+    box-shadow: 0px 0.2rem 1.5rem 0px rgba(69, 67, 96, 0.1)
 }
 .about-text-block {
-    margin-top: 30px;
+    margin-top: 2rem;
 }
 .about-content h4 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 600;
     color: #212529;
 }
 .about-content .text {
-    font-size: 14px;
-    line-height: 25px;
-    /* margin-top: 20px; */
+    font-size: 0.8rem;
+    line-height: 2rem;
     color: #212529;
 }
 .col-md-6{
@@ -102,7 +101,7 @@ section {
 }
 .section_title h2 {
     position: relative;
-    margin-bottom: 25px;
+    margin-bottom: 1.5rem;
 }
 .section_title h2::before {
     content: "";
@@ -110,10 +109,10 @@ section {
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    height: 70px;
-    width: 70px;
+    height: 4.5rem;
+    width: 4.5rem;
     background: url('../assets/images/title-decoration.png') no-repeat;
-    background-size: 70px;
+    background-size: 4.5rem;
     z-index: 0;
 }
 

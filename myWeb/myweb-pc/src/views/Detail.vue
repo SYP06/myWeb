@@ -11,11 +11,22 @@
       <div class="comment-box">
         <h6 class="comments-title">评论</h6>
         <div class="comment" v-for="item in comment" :key="item.comm_id">
-          <div class="comment-content">{{item.comm_content}}</div>
+          <div class="comment-content">{{ item.comm_content }}</div>
           <div class="comment-info">
-            <span class="userinfo">{{item.username}}</span>
-            <span class="post-time">{{item.comm_post_time}}</span>
+            <span class="userinfo">{{ item.nickname }}</span>
+            <span class="post-time">{{ formateDate(item.comm_post_time) }}</span>
           </div>
+        </div>
+        <div class="sendComment">
+          <el-input
+            type="textarea"
+            placeholder="请输入内容"
+            v-model="textarea"
+            maxlength="200"
+            show-word-limit
+          >
+          </el-input>
+          <button class="btn" @click="sendComment">提交</button>
         </div>
       </div>
     </section>
@@ -25,37 +36,83 @@
 export default {
   data() {
     return {
-      blog:"",
-      comment:"",
-    }
+      blog: "",
+      comment: "",
+      text: '',
+      textarea: '',
+      blogId:'',
+      nickname:'',
+    };
   },
-  created(){
-    this.getBlogDetail()
+  created() {
+    this.getBlogDetail();
   },
-  methods:{
-    getBlogDetail(){
-      let blogId = this.$route.params.id
-      this.$http('/blog/detail/'+blogId).then(res=>{
-        console.log(res);
-        if(res.data.state == 'success'){
-        this.blog = res.data.blogInfo;
-        this.comment = res.data.blogInfo.comments;
-        }else{
-          this.$router.push('/error')
+  methods: {
+    getBlogDetail() {
+      let loginUser = this.$store.state.loginUser;
+      this.nickname =loginUser.nickname
+      let blogId = this.$route.params.id;
+      this.$http("/blog/detail/" + blogId).then((res) => {
+        console.log("detail",res);
+        if (res.data.state == "success") {
+          this.blog = res.data.blogInfo;
+          this.comment = res.data.blogInfo.comments;
+          this.blogId = res.data.blogInfo.blog_id;
+        } else {
+          this.$router.push("/error");
         }
-      })
+      });
+    },
+    sendComment() {
+      // loginUser为空
+      let loginUser = this.$store.state.loginUser;
+      console.log(loginUser);
+      if (loginUser) {
+        this.$http
+          .post("/blog/comment", {
+            comment:this.textarea,
+            blogId:this.blogId ,
+            userId: loginUser.user_id,
+            nickname:loginUser.nickname,
+            headers: {
+              Authorization: localStorage.getItem("mytoken"),
+            },
+          })
+          .then((res) => {
+            console.log("comment",res);
+            let { state } = res.data;
+            if (state == "success") {
+              this.$router.push("/blog");
+            } else {
+              alert("发表评论失败!");
+            }
+          })
+      } else {
+        alert("还没有登录呢");
+        this.$router.push("/login");
+      }
     },
     formateDate(datetime) {
       function addDateZero(num) {
-        return (num < 10 ? "0" + num : num);
+        return num < 10 ? "0" + num : num;
       }
       let d = new Date(datetime);
-      let formatdatetime = d.getFullYear() + '-' + addDateZero(d.getMonth() + 1) + '-' + addDateZero(d.getDate()) + ' ' + addDateZero(d.getHours()) + ':' + addDateZero(d.getMinutes()) + ':' + addDateZero(d.getSeconds());
+      let formatdatetime =
+        d.getFullYear() +
+        "-" +
+        addDateZero(d.getMonth() + 1) +
+        "-" +
+        addDateZero(d.getDate()) +
+        " " +
+        addDateZero(d.getHours()) +
+        ":" +
+        addDateZero(d.getMinutes()) +
+        ":" +
+        addDateZero(d.getSeconds());
       return formatdatetime;
-
     },
-  }
-}
+  },
+};
 </script>
 <style scoped>
 .lineVector {
@@ -71,11 +128,11 @@ export default {
   }
 
   to {
-    background-position: -400px 0;
+    background-position: -25rem 0;
   }
 }
 section {
-  color: #f1f1f1;
+  color: #000;
   position: fixed;
   top: 0;
   left: 0;
@@ -83,38 +140,55 @@ section {
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #003f9c !important;
-  padding: 0 40px 0 120px;
+  padding: 0 2.5rem 0 7.5rem;
 }
 .section_title {
-  margin: 30px auto;
+  margin: 2rem auto;
 }
 .detail-box {
-  background-color: rgba(127, 164, 231,0.9);
-  margin: 50px auto;
+  /* background-color: rgba(127, 164, 231,0.9); */
+  background-color: #fff;
+  margin: 3rem auto;
   /* padding: 20px; */
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  padding: 10px;
+  border: 0.1rem solid #ffffff;
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  width: 60rem;
 }
-.detail-item{
-  margin: 10px 0;
+.detail-item {
+  margin: 1rem 0;
 }
-.comment-box{
+.comment-box {
   color: black;
-  background-color: rgba(250, 246, 248, 0.8);
-  margin: 20px auto;
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  padding: 20px;
+  background-color: #ffffff;
+  margin: 1.5rem auto;
+  border: 0.1rem solid #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
   text-align: left;
+  width: 60rem;
 }
-.comment{
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #f1f1f1;
-  border-radius: 10px;
-  background-color:  rgba(127, 164, 231,0.5);
+.comment {
+  margin-top: 0.8rem;
+  padding: 0.8rem;
+  border: 0.1rem solid #f1f1f1;
+  border-radius: 0.8rem;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: space-between;
+}
+.userinfo{
+  margin-right: 0.2rem;
+}
+.sendComment{
+  margin-top:1rem;
 }
 
+.el-textarea{
+  margin:0.8rem auto;
+}
+.btn{
+  font-size: 0.5rem;
+  border: 0.1rem solid #f1f1f1;
+}
 </style>

@@ -16,10 +16,8 @@ module.exports = {
         ctx.body = {
           state: "fail",
         };
-
       }
     }
-
   }
  
 }
